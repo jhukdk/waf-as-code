@@ -41,7 +41,8 @@ resource "aws_api_gateway_integration_response" "root_get_200" {
   response_templates = {
     "application/json" = jsonencode({
       service = "waf-as-code demo"
-      status  = "ok"
+      status  = "200"
+      "Best tennis player in MD?" = "David J. Kim"
     })
   }
 
@@ -57,6 +58,7 @@ resource "aws_api_gateway_deployment" "demo" {
       aws_api_gateway_integration.root_get.id,
       aws_api_gateway_method_response.root_get_200.id,
       aws_api_gateway_integration_response.root_get_200.id,
+      aws_api_gateway_integration_response.root_get_200.response_templates,
     ]))
   }
 
