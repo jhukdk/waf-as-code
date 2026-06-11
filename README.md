@@ -1,6 +1,6 @@
 # waf-as-code
 
-A small but fully working PoC for AWS WAFv2 deployment managed entirely as code:
+A PoC demonstrating AWS WAFv2 deployment managed entirely as code: a
 regional Web ACL (managed rule groups + custom rules + rate limiting) in
 front of an API Gateway endpoint, with full WAF logging, an automated
 attack-simulation test suite, and a GitOps pipeline where every rule change
