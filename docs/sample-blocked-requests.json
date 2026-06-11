@@ -1,0 +1,226 @@
+{
+  "custom_rule_block": {
+    "timestamp": 1781148297613,
+    "formatVersion": 1,
+    "webaclId": "arn:aws:wafv2:us-east-1:877995959706:regional/webacl/waf-as-code-web-acl/e9a18c17-845a-424f-a537-abcae0e7106c",
+    "terminatingRuleId": "block-x-demo-attack-header",
+    "terminatingRuleType": "REGULAR",
+    "action": "BLOCK",
+    "terminatingRuleMatchDetails": [],
+    "httpSourceName": "APIGW",
+    "httpSourceId": "877995959706:bikd311fg3:prod",
+    "ruleGroupList": [
+      {
+        "ruleGroupId": "AWS#AWSManagedRulesCommonRuleSet",
+        "terminatingRule": null,
+        "nonTerminatingMatchingRules": [],
+        "excludedRules": null,
+        "customerConfig": null
+      },
+      {
+        "ruleGroupId": "AWS#AWSManagedRulesKnownBadInputsRuleSet",
+        "terminatingRule": null,
+        "nonTerminatingMatchingRules": [],
+        "excludedRules": null,
+        "customerConfig": null
+      }
+    ],
+    "rateBasedRuleList": [
+      {
+        "rateBasedRuleId": "arn:aws:wafv2:us-east-1:877995959706_MANAGED:regional/ipset/e9a18c17-845a-424f-a537-abcae0e7106c_07802acf-3ea6-4f9e-8a3c-198c1c903646_IPV4/07802acf-3ea6-4f9e-8a3c-198c1c903646",
+        "rateBasedRuleName": "rate-limit-per-ip",
+        "limitKey": "IP",
+        "maxRateAllowed": 100,
+        "evaluationWindowSec": 300,
+        "limitValue": "REDACTED"
+      }
+    ],
+    "nonTerminatingMatchingRules": [
+      {
+        "ruleId": "geo-match-count",
+        "action": "COUNT",
+        "ruleMatchDetails": []
+      }
+    ],
+    "requestHeadersInserted": null,
+    "responseCodeSent": null,
+    "httpRequest": {
+      "clientIp": "REDACTED",
+      "country": "US",
+      "headers": [
+        {
+          "name": "X-Forwarded-For",
+          "value": "REDACTED"
+        },
+        {
+          "name": "X-Forwarded-Proto",
+          "value": "https"
+        },
+        {
+          "name": "X-Forwarded-Port",
+          "value": "443"
+        },
+        {
+          "name": "Host",
+          "value": "bikd311fg3.execute-api.us-east-1.amazonaws.com"
+        },
+        {
+          "name": "X-Amzn-Trace-Id",
+          "value": "Root=1-6a2a2a89-531a66f80c6e78eb5aac1599"
+        },
+        {
+          "name": "user-agent",
+          "value": "curl/8.7.1"
+        },
+        {
+          "name": "accept",
+          "value": "*/*"
+        },
+        {
+          "name": "x-demo-attack",
+          "value": "1"
+        }
+      ],
+      "uri": "/prod",
+      "args": "",
+      "httpVersion": "HTTP/1.1",
+      "httpMethod": "GET",
+      "requestId": "exuVkF1tIAMEApA=",
+      "fragment": "",
+      "scheme": "",
+      "host": ""
+    },
+    "labels": [
+      {
+        "name": "awswaf:clientip:geo:country:US"
+      },
+      {
+        "name": "awswaf:clientip:geo:region:US-MD"
+      }
+    ]
+  },
+  "managed_rule_block": {
+    "timestamp": 1781148649638,
+    "formatVersion": 1,
+    "webaclId": "arn:aws:wafv2:us-east-1:877995959706:regional/webacl/waf-as-code-web-acl/e9a18c17-845a-424f-a537-abcae0e7106c",
+    "terminatingRuleId": "aws-sqli-rule-set",
+    "terminatingRuleType": "MANAGED_RULE_GROUP",
+    "action": "BLOCK",
+    "terminatingRuleMatchDetails": [
+      {
+        "conditionType": "SQL_INJECTION",
+        "location": "ALL_QUERY_ARGS",
+        "matchedData": [
+          "1",
+          "OR",
+          "1",
+          "=",
+          "1"
+        ],
+        "matchedFieldName": "id",
+        "sensitivityLevel": "LOW"
+      }
+    ],
+    "httpSourceName": "APIGW",
+    "httpSourceId": "877995959706:bikd311fg3:prod",
+    "ruleGroupList": [
+      {
+        "ruleGroupId": "AWS#AWSManagedRulesCommonRuleSet",
+        "terminatingRule": null,
+        "nonTerminatingMatchingRules": [],
+        "excludedRules": null,
+        "customerConfig": null
+      },
+      {
+        "ruleGroupId": "AWS#AWSManagedRulesKnownBadInputsRuleSet",
+        "terminatingRule": null,
+        "nonTerminatingMatchingRules": [],
+        "excludedRules": null,
+        "customerConfig": null
+      },
+      {
+        "ruleGroupId": "AWS#AWSManagedRulesSQLiRuleSet",
+        "terminatingRule": {
+          "ruleId": "SQLi_QUERYARGUMENTS",
+          "action": "BLOCK",
+          "ruleMatchDetails": null
+        },
+        "nonTerminatingMatchingRules": [],
+        "excludedRules": null,
+        "customerConfig": null
+      }
+    ],
+    "rateBasedRuleList": [
+      {
+        "rateBasedRuleId": "arn:aws:wafv2:us-east-1:877995959706_MANAGED:regional/ipset/e9a18c17-845a-424f-a537-abcae0e7106c_07802acf-3ea6-4f9e-8a3c-198c1c903646_IPV4/07802acf-3ea6-4f9e-8a3c-198c1c903646",
+        "rateBasedRuleName": "rate-limit-per-ip",
+        "limitKey": "IP",
+        "maxRateAllowed": 100,
+        "evaluationWindowSec": 300,
+        "limitValue": "REDACTED"
+      }
+    ],
+    "nonTerminatingMatchingRules": [
+      {
+        "ruleId": "geo-match-count",
+        "action": "COUNT",
+        "ruleMatchDetails": []
+      }
+    ],
+    "requestHeadersInserted": null,
+    "responseCodeSent": null,
+    "httpRequest": {
+      "clientIp": "REDACTED",
+      "country": "US",
+      "headers": [
+        {
+          "name": "X-Forwarded-For",
+          "value": "REDACTED"
+        },
+        {
+          "name": "X-Forwarded-Proto",
+          "value": "https"
+        },
+        {
+          "name": "X-Forwarded-Port",
+          "value": "443"
+        },
+        {
+          "name": "Host",
+          "value": "bikd311fg3.execute-api.us-east-1.amazonaws.com"
+        },
+        {
+          "name": "X-Amzn-Trace-Id",
+          "value": "Root=1-6a2a2be9-5ed1698e67a6346666635040"
+        },
+        {
+          "name": "user-agent",
+          "value": "curl/8.7.1"
+        },
+        {
+          "name": "accept",
+          "value": "*/*"
+        }
+      ],
+      "uri": "/prod",
+      "args": "id=1%27+OR+%271%27%3d%271",
+      "httpVersion": "HTTP/1.1",
+      "httpMethod": "GET",
+      "requestId": "exvMkFztoAMEvgw=",
+      "fragment": "",
+      "scheme": "",
+      "host": ""
+    },
+    "labels": [
+      {
+        "name": "awswaf:managed:aws:sql-database:SQLi_QueryArguments"
+      },
+      {
+        "name": "awswaf:clientip:geo:country:US"
+      },
+      {
+        "name": "awswaf:clientip:geo:region:US-MD"
+      }
+    ]
+  }
+}

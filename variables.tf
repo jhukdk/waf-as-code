@@ -9,3 +9,9 @@ variable "project_name" {
   type        = string
   default     = "waf-as-code"
 }
+
+variable "geo_count_countries" {
+  description = "Countries counted (not blocked) by the geo-match rule. Defaults include US so demo traffic shows up in logs without being blocked."
+  type        = list(string)
+  default     = ["US", "CA"]
+}

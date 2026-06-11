@@ -30,6 +30,11 @@ Not for: production hardening, multi-region, multi-account.
 5. Custom byte-match/regex rule: block requests containing header
    `x-demo-attack` (any value) -> 403. This is the deterministic
    "show a custom rule blocking" demo for the interview.
+   (Implemented as a size_constraint GE 0 on the header, since
+   byte-match can't express "header present with any value".)
+6. AWSManagedRulesSQLiRuleSet — default actions. Added after
+   tests/attack-sim.sh case 2 caught that neither CommonRuleSet nor
+   KnownBadInputs blocks SQLi (good interview story).
 - Every rule and the web ACL itself must have CloudWatch metrics enabled
   and sampled requests on.
 
