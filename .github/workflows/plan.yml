@@ -1,0 +1,79 @@
+name: terraform plan
+
+on:
+  pull_request:
+
+permissions:
+  id-token: write # OIDC token for assuming the AWS role
+  contents: read
+  pull-requests: write # post the plan as a PR comment
+
+env:
+  TF_IN_AUTOMATION: "true"
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ vars.AWS_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - uses: hashicorp/setup-terraform@v3
+
+      - name: terraform fmt
+        run: terraform fmt -check -recursive
+
+      - name: terraform init
+        run: terraform init -input=false
+
+      - name: terraform validate
+        run: terraform validate
+
+      - uses: terraform-linters/setup-tflint@v4
+
+      - name: tflint
+        run: |
+          tflint --init
+          tflint --format compact
+
+      - name: terraform plan
+        id: plan
+        run: terraform plan -input=false -no-color
+        continue-on-error: true
+
+      - name: comment plan on PR
+        uses: actions/github-script@v7
+        env:
+          PLAN_STDOUT: ${{ steps.plan.outputs.stdout }}
+          PLAN_OUTCOME: ${{ steps.plan.outcome }}
+        with:
+          script: |
+            const outcome = process.env.PLAN_OUTCOME;
+            let plan = process.env.PLAN_STDOUT || "(no output)";
+            const limit = 60000; // stay under the comment size cap
+            if (plan.length > limit) {
+              plan = plan.slice(0, limit) + "\n... (truncated, see workflow log)";
+            }
+            const body = [
+              `### Terraform plan: \`${outcome}\``,
+              "<details><summary>Show plan</summary>",
+              "",
+              "```hcl",
+              plan,
+              "```",
+              "</details>",
+            ].join("\n");
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body,
+            });
+
+      - name: fail if plan failed
+        if: steps.plan.outcome == 'failure'
+        run: exit 1

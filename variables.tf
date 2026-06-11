@@ -10,6 +10,12 @@ variable "project_name" {
   default     = "waf-as-code"
 }
 
+variable "github_repo" {
+  description = "GitHub org/repo allowed to assume the CI role via OIDC (format: org/repo)"
+  type        = string
+  default     = "jhukdk/waf-as-code"
+}
+
 variable "geo_count_countries" {
   description = "Countries counted (not blocked) by the geo-match rule. Defaults include US so demo traffic shows up in logs without being blocked."
   type        = list(string)
