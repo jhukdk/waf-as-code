@@ -53,6 +53,19 @@ resource "aws_wafv2_web_acl" "demo" {
             count {}
           }
         }
+
+        # Uptime monitors and internal health-check probes often send no
+        # User-Agent and were showing up as blocks on this sub-rule. Count
+        # instead of block; the rate limit and the other CommonRuleSet
+        # sub-rules still apply to that traffic. Revisit if the
+        # NoUserAgent_HEADER count metric shows abuse rather than monitors.
+        rule_action_override {
+          name = "NoUserAgent_HEADER"
+
+          action_to_use {
+            count {}
+          }
+        }
       }
     }
 
